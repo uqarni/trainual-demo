@@ -31,9 +31,6 @@ def main():
     #variables for system prompt
     name = 'Allison'
     booking_link = 'trainualbooking.com'
-
-    filtration_field1 = st.write("***Filtered for [filtration data field 1]***")
-    filtration_field2 = st.write("***Filtered for [filtration data field 2]***")
     
     lead_first_name = st.text_input('Lead First Name (leave blank for John)', value = 'John')
     custom_field1 = st.text_input('customization data field 2 (leave blank for unknown)', value = 'unknown')
