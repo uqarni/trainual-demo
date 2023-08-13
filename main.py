@@ -43,7 +43,7 @@ def main():
     system_prompt = system_prompt.format(first_name = lead_first_name, custom_field1 = custom_field1, custom_field2 = custom_field2)
 
     
-    initial_text = st.text_input("Initial Text. Current value is 'Hi this is Allison from Trainual. Is this {first_name}'", value = 'Hi this is Allison from Trainual. Is this {first_name}?')
+    initial_text = bot_info['initial_text']
     initial_text = initial_text.format(first_name = lead_first_name)
     
     if st.button('Click to Start or Restart'):
