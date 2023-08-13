@@ -1,5 +1,5 @@
 import streamlit as st
-from functions import ideator, 
+from functions import ideator
 import json
 import os
 import sys
