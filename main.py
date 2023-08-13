@@ -32,9 +32,9 @@ def main():
     name = 'Allison'
     booking_link = 'trainualbooking.com'
     
-    lead_first_name = st.text_input('Lead First Name (leave blank for John)', value = 'John')
-    custom_field1 = st.text_input('customization data field 2 (leave blank for unknown)', value = 'unknown')
-    custom_field2 = st.text_input('customization data field 3 (leave blank for unknown)', value = 'unknown')
+    lead_first_name = st.text_input('Lead First Name', value = 'John')
+    custom_field1 = st.text_input('customization data field 2', value = 'unknown')
+    custom_field2 = st.text_input('customization data field 3', value = 'unknown')
 
     system_prompt = bot_info['system_prompt']
     system_prompt = system_prompt.format(first_name = lead_first_name, custom_field1 = custom_field1, custom_field2 = custom_field2)
