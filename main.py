@@ -39,7 +39,7 @@ def main():
     custom_field1 = st.text_input('customization data field 2 (leave blank for unknown)', value = 'unknown')
     custom_field2 = st.text_input('customization data field 3 (leave blank for unknown)', value = 'unknown')
 
-    system_prompt = system_prompt
+    system_prompt = bot_infp['system_prompt']
     system_prompt = system_prompt.format(first_name = lead_first_name, custom_field1 = custom_field1, custom_field2 = custom_field2)
 
     
