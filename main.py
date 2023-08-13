@@ -4,51 +4,47 @@ import json
 import os
 import sys
 from datetime import datetime
-import redis
+from supabase import create_client, Client
 
+#connect to supabase database
+urL: str = os.environ.get("SUPABASE_URL")
+key: str = os.environ.get("SUPABASE_KEY")
+
+supabase: Client = create_client(urL, key)
+data = supabase.table("bots").select("*").eq("id", "allison").execute()
+bot_info = data[1][0]
+
+# id
+# org_id
+# system_prompt
+# max_followup_count
+# followup_time
+# followup_prompt
 
 
 def main():
 
     # Create a title for the chat interface
-    st.title("Trainual Bot")
+    st.title("Trainual Bot (named Allison)")
     st.write("To test, first select some fields then click the button below.")
   
     #variables for system prompt
     name = 'Allison'
     booking_link = 'trainualbooking.com'
-    initial_description = st.text_input("add lead variables here")
 
-    filtration_field1 = st.write("Filtered for [filtration data field 1]")
-    filtration_field2 = st.write("Filtered for [filtration data field 2]")
+    filtration_field1 = st.write("***Filtered for [filtration data field 1]***")
+    filtration_field2 = st.write("***Filtered for [filtration data field 2]***")
     
-    lead_first_name = st.text_input('Lead First Name (leave blank for John)')
+    lead_first_name = st.text_input('Lead First Name (leave blank for John)', value = 'John')
+    custom_field1 = st.text_input('customization data field 2 (leave blank for unknown)', value = 'unknown')
+    custom_field2 = st.text_input('customization data field 3 (leave blank for unknown)', value = 'unknown')
+
+    system_prompt = system_prompt
+    system_prompt = system_prompt.format(first_name = lead_first_name, custom_field1 = custom_field1, custom_field2 = custom_field2)
+
     
-    custom_field1 = st.text_input('customization data field 3')
-    custom_field2 = st.text_input('customization data field 4')
-
-
-    
-    #from booking
-    resched_link='none'
-    cancel_link='none'
-    meeting_booked='none'
-    meeting_time='none'
-        
-    redis_host = os.environ.get("REDIS_1_HOST")
-    redis_port = 25061
-    redis_password = os.environ.get("REDIS_1_PASSWORD")
-    rd = redis.Redis(host=redis_host, port=redis_port, password=redis_password, ssl=True, ssl_ca_certs="/etc/ssl/certs/ca-certificates.crt")
-
-    system_prompt = rd.get("carr@improovy.com-systemprompt-01").decode('utf-8')
-    system_prompt = system_prompt.format(name = name, booking_link = booking_link, initial_description = initial_description, sqft = sqft, color = color, lead_full_name = lead_full_name, email = email,
-                                         address = address, status = status, stage = stage, timeline = timeline, spreadsheet = spreadsheet, zipcode = zipcode, interior_surfaces = interior_surfaces,
-                                         interior_wall_height = interior_wall_height, exterior_surfaces = exterior_surfaces, exterior_wall_height = exterior_wall_height, resched_link = resched_link,
-                                         cancel_link = cancel_link, meeting_booked = meeting_booked, meeting_time = meeting_time, additional_notes = additional_notes)
-
-    initial_text = rd.get("carr@improovy.com-initialtext-01").decode('utf-8')
-    initial_text = initial_text.format(name = name, lead_full_name = lead_full_name, description = initial_description, address = address, booking_link = booking_link)
-
+    initial_text = st.text_input("Initial Text. Current value is 'Hi this is Allison from Trainual. Is this {first_name}'", value = 'Hi this is Allison from Trainual. Is this {first_name}?')
+    initial_text = initial_text.format(first_name = lead_first_name)
     
     if st.button('Click to Start or Restart'):
         st.write(initial_text)
