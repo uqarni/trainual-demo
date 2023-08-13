@@ -1,5 +1,5 @@
 import streamlit as st
-from functions import ideator
+from functions import ideator, 
 import json
 import os
 import sys
@@ -18,24 +18,16 @@ def main():
     name = 'Allison'
     booking_link = 'trainualbooking.com'
     initial_description = st.text_input("add lead variables here")
-    sqft = st.text_input("add sqft here")
-    color = st.text_input('desired color')
-    #from contact
-    lead_full_name = "John Doe"
-    email = "johndoe@gmail.com"
-    address=st.text_input('enter address')
-    additional_notes = 'n/a'
-    #from deal
-    status='open'
-    stage='uncontacted lead'
 
-    timeline='1-2 weeks'
-    spreadsheet='spreadsheet.com/sheet'
-    zipcode='60614'
-    interior_surfaces = 'unknown'
-    interior_wall_height = 'unknown'
-    exterior_surfaces = 'unknown'
-    exterior_wall_height = 'unknown'
+    filtration_field1 = st.write("Filtered for [filtration data field 1]")
+    filtration_field2 = st.write("Filtered for [filtration data field 2]")
+    
+    lead_first_name = st.text_input('Lead First Name (leave blank for John)')
+    
+    custom_field1 = st.text_input('customization data field 3')
+    custom_field2 = st.text_input('customization data field 4')
+
+
     
     #from booking
     resched_link='none'
