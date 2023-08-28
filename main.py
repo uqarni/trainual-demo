@@ -25,11 +25,11 @@ bot_info = data[1][0]
 def main():
 
     # Create a title for the chat interface
-    st.title("Trainual Bot (named Allison)")
+    st.title("Trainual Bot (named Tracy)")
     st.write("To test, first select some fields then click the button below.")
   
     #variables for system prompt
-    name = 'Allison'
+    name = 'Tracy'
     booking_link = 'trainualbooking.com'
     
     lead_first_name = st.text_input('Lead First Name', value = 'John')
@@ -37,7 +37,7 @@ def main():
     custom_field2 = st.text_input('customization data field 3', value = 'unknown')
 
     system_prompt = bot_info['system_prompt']
-    system_prompt = system_prompt.format(first_name = lead_first_name, custom_field1 = custom_field1, custom_field2 = custom_field2)
+    system_prompt = system_prompt.format(lead_full_name = lead_first_name, custom_field1 = custom_field1, custom_field2 = custom_field2)
 
     
     initial_text = bot_info['initial_text']
