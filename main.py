@@ -21,8 +21,21 @@ bot_info = data[1][0]
 # followup_time
 # followup_prompt
 
+class _SessionState:
+    def __init__(self, **kwargs):
+        for key, val in kwargs.items():
+            setattr(self, key, val)
+
+def get_state(**kwargs):
+    if 'session_state' not in st.session_state:
+        st.session_state.session_state = _SessionState(**kwargs)
+    return st.session_state.session_state
+
+def increment_variable(state):
+    state.my_var += 1
 
 def main():
+    day = get_state(my_var=1)
 
     # Create a title for the chat interface
     st.title("Trainual Bot (named Tracy)")
@@ -106,7 +119,42 @@ def main():
         for message in messages[1:]:
             string = string + message["role"] + ": " + message["content"] + "\n\n"
         st.write(string)
-            
+        
+    if st.button("Increment Day"):
+        increment_variable(day)
+        newline = {"role": "assistant", "content": f"This is a secret internal thought that the user cannot read. It's now the start of day {day.my_var}. I need to follow up for this day."}
+        with open('database.jsonl', 'a') as f:
+            f.write(json.dumps(newline) + '\n')
+    
+        # Your existing code for reading the database, generating responses, and updating the database can remain here
+        # extract messages out to list
+        messages = []
+
+        with open('database.jsonl', 'r') as f:
+            for line in f:
+                json_obj = json.loads(line)
+                messages.append(json_obj)
+
+        #generate OpenAI response
+        messages, count = ideator(messages)
+
+        #append to database
+        with open('database.jsonl', 'a') as f:
+                for i in range(count):
+                    f.write(json.dumps(messages[-count + i]) + '\n')
+
+
+
+        # Display the response in the chat interface
+        string = ""
+
+        for message in messages[1:]:
+            string = string + message["role"] + ": " + message["content"] + "\n\n"
+        st.write(string)
+
+# At the bottom of your Streamlit layout, you can show the current week
+st.write(f"*Currently in Day:* {day.my_var}")
+        
 
 if __name__ == '__main__':
     main()
