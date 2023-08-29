@@ -152,8 +152,8 @@ def main():
             string = string + message["role"] + ": " + message["content"] + "\n\n"
         st.write(string)
 
-# At the bottom of your Streamlit layout, you can show the current week
-st.write(f"*Currently in Day:* {day.my_var}")
+    # At the bottom of your Streamlit layout, you can show the current week
+    st.write(f"*Currently in Day:* {day.my_var}")
         
 
 if __name__ == '__main__':
