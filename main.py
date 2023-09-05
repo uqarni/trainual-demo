@@ -34,6 +34,9 @@ def get_state(**kwargs):
 def increment_variable(state):
     state.my_var += 1
 
+def reset_variable(state):
+    state.my_var = 1
+
 def main():
     day = get_state(my_var=1)
 
@@ -57,6 +60,7 @@ def main():
     initial_text = initial_text.format(lead_first_name = lead_first_name)
     
     if st.button('Click to Start or Restart'):
+        reset_variable(day)
         st.write(initial_text)
         restart_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         with open('database.jsonl', 'r') as db, open('archive.jsonl','a') as arch:
