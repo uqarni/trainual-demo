@@ -121,7 +121,7 @@ def main():
         string = ""
 
         for message in messages[1:]:
-            if 'This is a secret internal thought' not in message:
+            if 'This is a secret internal thought' not in str(message):
                 string = string + message["role"] + ": " + message["content"] + "\n\n"
         st.write(string)
         
@@ -154,7 +154,7 @@ def main():
         string = ""
 
         for message in messages[1:]:
-            if 'This is a secret internal thought' not in message:
+            if 'This is a secret internal thought' not in str(message):
                 string = string + message["role"] + ": " + message["content"] + "\n\n"
         st.write(string)
 
