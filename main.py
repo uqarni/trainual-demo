@@ -46,15 +46,15 @@ def main():
     booking_link = 'trainualbooking.com'
     
     lead_first_name = st.text_input('Lead First Name', value = 'John')
-    custom_field1 = st.text_input('customization data field 2', value = 'unknown')
-    custom_field2 = st.text_input('customization data field 3', value = 'unknown')
+    promo_code = st.text_input('promo code', value = 'Trainual50')
+    activation_date = st.text_input('activation date', value = 'none')
 
     system_prompt = bot_info['system_prompt']
-    system_prompt = system_prompt.format(lead_full_name = lead_first_name, custom_field1 = custom_field1, custom_field2 = custom_field2)
+    system_prompt = system_prompt.format(lead_first_name = lead_first_name, promo_code = promo_code, activation_date = activation_date)
 
     
     initial_text = bot_info['initial_text']
-    initial_text = initial_text.format(first_name = lead_first_name)
+    initial_text = initial_text.format(lead_first_name = lead_first_name)
     
     if st.button('Click to Start or Restart'):
         st.write(initial_text)
