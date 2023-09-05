@@ -117,7 +117,8 @@ def main():
         string = ""
 
         for message in messages[1:]:
-            string = string + message["role"] + ": " + message["content"] + "\n\n"
+            if 'This is a secret internal thought' not in message:
+                string = string + message["role"] + ": " + message["content"] + "\n\n"
         st.write(string)
         
     if st.button("Increment Day"):
@@ -149,7 +150,8 @@ def main():
         string = ""
 
         for message in messages[1:]:
-            string = string + message["role"] + ": " + message["content"] + "\n\n"
+            if 'This is a secret internal thought' not in message:
+                string = string + message["role"] + ": " + message["content"] + "\n\n"
         st.write(string)
 
     # At the bottom of your Streamlit layout, you can show the current week
