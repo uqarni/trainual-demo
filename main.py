@@ -127,39 +127,44 @@ def main():
         
     if st.button("Increment Day"):
         increment_variable(day)
-        if str(day) == "7":
-            newline = {"role": "assistant", "content": f"This is a secret internal thought that the user cannot read. It's now the start of day {day.my_var}. Today is the last day of the trial, I need to ask if the user is ready to sign up for using trainual. I have a promo code that will give them a special discount if they do."}
-        else:
-            newline = {"role": "assistant", "content": f"This is a secret internal thought that the user cannot read. It's now the start of day {day.my_var}. I need to follow up for this day."}
-        with open('database.jsonl', 'a') as f:
-            f.write(json.dumps(newline) + '\n')
+        
+        if int(day) <= 7:
+            
+            if str(day) == "7":
+                newline = {"role": "assistant", "content": f"This is a secret internal thought that the user cannot read. It's now the start of day {day.my_var}. Today is the last day of the trial, and I can proceed to Step 4. This means I need to ask if the user is ready to sign up for using trainual. I have a promo code that will give them a special discount if they do."}
+            else:
+                newline = {"role": "assistant", "content": f"This is a secret internal thought that the user cannot read. It's now the start of day {day.my_var}. I need to follow up for this day."}
+            with open('database.jsonl', 'a') as f:
+                f.write(json.dumps(newline) + '\n')
+        
+            # Your existing code for reading the database, generating responses, and updating the database can remain here
+            # extract messages out to list
+            messages = []
     
-        # Your existing code for reading the database, generating responses, and updating the database can remain here
-        # extract messages out to list
-        messages = []
-
-        with open('database.jsonl', 'r') as f:
-            for line in f:
-                json_obj = json.loads(line)
-                messages.append(json_obj)
-
-        #generate OpenAI response
-        messages, count = ideator(messages)
-
-        #append to database
-        with open('database.jsonl', 'a') as f:
-                for i in range(count):
-                    f.write(json.dumps(messages[-count + i]) + '\n')
-
-
-
-        # Display the response in the chat interface
-        string = ""
-
-        for message in messages[1:]:
-            if 'This is a secret internal thought' not in str(message):
-                string = string + message["role"] + ": " + message["content"] + "\n\n"
-        st.write(string)
+            with open('database.jsonl', 'r') as f:
+                for line in f:
+                    json_obj = json.loads(line)
+                    messages.append(json_obj)
+    
+            #generate OpenAI response
+            messages, count = ideator(messages)
+    
+            #append to database
+            with open('database.jsonl', 'a') as f:
+                    for i in range(count):
+                        f.write(json.dumps(messages[-count + i]) + '\n')
+    
+    
+    
+            # Display the response in the chat interface
+            string = ""
+    
+            for message in messages[1:]:
+                if 'This is a secret internal thought' not in str(message):
+                    string = string + message["role"] + ": " + message["content"] + "\n\n"
+            st.write(string)
+        else:
+            st.write('Trial ended. Bot will not send messages. Please reset to start again.')
 
     # At the bottom of your Streamlit layout, you can show the current week
     st.write(f"*Currently in Day:* {day.my_var}")
