@@ -128,9 +128,9 @@ def main():
     if st.button("Increment Day"):
         increment_variable(day)
         
-        if int(day) <= 7:
+        if int(day.my_var) <= 7:
             
-            if str(day) == "7":
+            if str(day.my_var) == "7":
                 newline = {"role": "assistant", "content": f"This is a secret internal thought that the user cannot read. It's now the start of day {day.my_var}. Today is the last day of the trial, and I can proceed to Step 4. This means I need to ask if the user is ready to sign up for using trainual. I have a promo code that will give them a special discount if they do."}
             else:
                 newline = {"role": "assistant", "content": f"This is a secret internal thought that the user cannot read. It's now the start of day {day.my_var}. I need to follow up for this day."}
