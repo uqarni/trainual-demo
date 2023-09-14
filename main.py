@@ -131,10 +131,11 @@ def main():
         if int(day.my_var) <= 7:
             
             if str(day.my_var) == "7":
-                newline = {"role": "assistant", "content": f"This is a secret internal thought that the user cannot read. It's now the start of day {day.my_var}. Today is the last day of the trial, and I can proceed to Step 4. This means I need to ask if the user is ready to sign up for using trainual. I have a promo code that will give them a special discount if they do."}
+                newline = {"role": "system", "content": f"It's now the start of day {day.my_var}. Today is the last day of the trial, and you can proceed to Step 4. This means you need to ask if the user is ready to sign up for using Trainual. You have a promo code that will give them a special discount if they do."}
+            elif str(day.my_var) == "5" or str(day.my_var) == "6":
+                newline = {"role": "system", "content": f"It's now the start of day {day.my_var}. You need to follow up for this day. If the conversation so far indicates they are interested or have engaged with it, mention that the trial is going to wrap up soon, ask if there any remaining goals you want to accomplish; you're here to help! If they have not engaged, remind them that the trial is coming to an end soon and you would love to show them how Trainual can help them. If appropriate, ask what was the main objective they were hoping to accomplish with this trial? "}
             else:
-                newline = {"role": "assistant", "content": f"This is a secret internal thought that the user cannot read. It's now the start of day {day.my_var}. I need to follow up for this day."}
-            with open('database.jsonl', 'a') as f:
+                newline = {"role": "system", "content": f"It's now the start of day {day.my_var}. You need to follow up for this day."}
                 f.write(json.dumps(newline) + '\n')
         
             # Your existing code for reading the database, generating responses, and updating the database can remain here
@@ -160,7 +161,7 @@ def main():
             string = ""
     
             for message in messages[1:]:
-                if 'This is a secret internal thought' not in str(message):
+                if "It's now the start of day"  not in str(message):
                     string = string + message["role"] + ": " + message["content"] + "\n\n"
             st.write(string)
         else:
