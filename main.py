@@ -136,7 +136,8 @@ def main():
                 newline = {"role": "system", "content": f"It's now the start of day {day.my_var}. You need to follow up for this day. If the conversation so far indicates they are interested or have engaged with it, mention that the trial is going to wrap up soon, ask if there any remaining goals you want to accomplish; you're here to help! If they have not engaged, remind them that the trial is coming to an end soon and you would love to show them how Trainual can help them. If appropriate, ask what was the main objective they were hoping to accomplish with this trial? "}
             else:
                 newline = {"role": "system", "content": f"It's now the start of day {day.my_var}. You need to follow up for this day."}
-            f.write(json.dumps(newline) + '\n')
+            with open('database.jsonl', 'a') as f:
+                f.write(json.dumps(newline) + '\n')
         
             # Your existing code for reading the database, generating responses, and updating the database can remain here
             # extract messages out to list
