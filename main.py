@@ -50,7 +50,7 @@ def main():
     
     lead_first_name = st.text_input('Lead First Name', value = 'John')
     promo_code = st.text_input('promo code', value = 'Trainual50')
-    activation_date = st.text_input('activation date', value = 'none')
+    activation_date = st.selectbox('activated', ['yes', 'no'])
 
     system_prompt = bot_info['system_prompt']
     system_prompt = system_prompt.format(lead_first_name = lead_first_name, promo_code = promo_code, activation_date = activation_date)
