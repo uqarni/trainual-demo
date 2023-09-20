@@ -28,8 +28,8 @@ class _SessionState:
 
 def get_state(**kwargs):
     if 'session_state' not in st.session_state:
-        st.session_state.session_state = _SessionState(**kwargs)
-    return st.session_state.session_state
+        st.session_state['session_state'] = _SessionState(**kwargs)
+    return st.session_state['session_state']
 
 def increment_variable(state):
     state.my_var += 1
