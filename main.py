@@ -1,5 +1,5 @@
 import streamlit as st
-from functions import ideator
+from functions import ideator, secret_message
 import json
 import os
 import sys
@@ -153,12 +153,7 @@ def main():
         
         if int(day.my_var) <= 7:
             
-            if str(day.my_var) == "7":
-                newline = {"role": "system", "content": f"It's now the start of day {day.my_var}. Today is the last day of the trial, and you can proceed to Step 4. This means you need to ask if the user is ready to sign up for using Trainual. You have a promo code that will give them a special discount if they do."}
-            elif str(day.my_var) == "5" or str(day.my_var) == "6":
-                newline = {"role": "system", "content": f"It's now the start of day {day.my_var}. You need to follow up for this day. If they've been an engaging lead so far, mention that the trial is going to wrap up soon, ask if there any remaining goals you want to accomplish; you're here to help! If they have not been an engaging lead and explored some features in detail, remind them that the trial is coming to an end soon and you would love to show them how Trainual can help them. Ask what was the main objective they were hoping to accomplish with this trial? "}
-            else:
-                newline = {"role": "system", "content": f"It's now the start of day {day.my_var}. You need to follow up for this day."}
+            newline = secret_message(day.my_var, day.activation_date)
             with open('database.jsonl', 'a') as f:
                 f.write(json.dumps(newline) + '\n')
         

@@ -72,3 +72,24 @@ def ideator(messages):
 
 
 
+def secret_message(day:int, activated: str):
+
+    prepend = '[secret internal thought, not visible to the user] '
+    seven = f"It's now the start of day {day}. Today is the last day of the trial, and I can proceed to Step 4. This means I need to ask if the user is ready to sign up for using Trainual. I have a promo code that will give them a special discount if they do."
+    five_or_six = f"It's now the start of day {day}. I need to follow up for this day. If they've been an engaging lead so far, I must mention that the trial is going to wrap up soon, ask if there any remaining goals you want to accomplish; I'm here to help! If they have not been an engaging lead and explored some features in detail, I must remind them that the trial is coming to an end soon and I would love to show them how Trainual can help them. I'll also ask what was the main objective they were hoping to accomplish with this trial? "
+    other = f"It's now the start of day {day}. I need to follow up for this day."
+    active = " Also, I see this user is activated! Meaning they have either created content or invited a team member to Trainual. This means they are an active use and more likely to buy! I should push for the close!"
+    inactive = " Also, I see this user is not activated. This means they have not created content or invited a team member to Trainual."
+    
+    if day == 7:
+        to_send = prepend + seven
+    elif day == 5 or day == 6:
+        to_send = prepend + five_or_six
+    else:
+        to_send = prepend + other
+    if activated == 'yes':
+        to_send += active
+    elif activated == 'no':
+        to_send += inactive
+
+    return {"role": "assistant", "content": to_send}
