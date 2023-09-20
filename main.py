@@ -14,13 +14,6 @@ supabase: Client = create_client(urL, key)
 data, count = supabase.table("bots").select("*").eq("id", "allison").execute()
 bot_info = data[1][0]
 
-# id
-# org_id
-# system_prompt
-# max_followup_count
-# followup_time
-# followup_prompt
-
 class _SessionState:
     def __init__(self, **kwargs):
         for key, val in kwargs.items():
@@ -38,7 +31,9 @@ def reset_variable(state):
     state.my_var = 1
 
 def main():
+    # Get session state variables
     day = get_state(my_var=1)
+    state = get_state(activated="yes")
 
     # Create a title for the chat interface
     st.title("Trainual Bot (named Tracy)")
@@ -50,46 +45,24 @@ def main():
     
     lead_first_name = st.text_input('Lead First Name', value = 'John')
     promo_code = st.text_input('promo code', value = 'Trainual50')
-    activation_date = st.selectbox('activated', ['yes', 'no'])
+    
+    # Capture the activated state from the selectbox and update the session state
+    activated = st.selectbox('activated', ['yes', 'no'])
+    state.activated = activated
 
     system_prompt = bot_info['system_prompt']
-    system_prompt = system_prompt.format(lead_first_name = lead_first_name, promo_code = promo_code, activation_date = activation_date)
+    system_prompt = system_prompt.format(lead_first_name = lead_first_name, promo_code = promo_code, activation_date = activated)
 
-    
     initial_text = bot_info['initial_text']
     initial_text = initial_text.format(lead_first_name = lead_first_name)
     
     if st.button('Click to Start or Restart'):
+        # ... [your existing code]
         reset_variable(day)
-        st.write(initial_text)
-        restart_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        with open('database.jsonl', 'r') as db, open('archive.jsonl','a') as arch:
-        # add reset 
-            arch.write(json.dumps({"restart": restart_time}) + '\n')
-        #copy each line from db to archive
-            for line in db:
-                arch.write(line)
+        state.activated = 'yes'  # Resetting to default for a fresh start
 
-        #clear database to only first two lines
-        with open('database.jsonl', 'w') as f:
-        # Override database with initial json files
-            messages = [
-                {"role": "system", "content": system_prompt},
-                {"role": "assistant", "content": initial_text}            
-            ]
-            f.write(json.dumps(messages[0])+'\n')
-            f.write(json.dumps(messages[1])+'\n')
-
-
-
-    #initialize messages list and print opening bot message
-    #st.write("Hi! This is Tara. Seems like you need help coming up with an idea! Let's do this. First, what's your job?")
-
-    # Create a text input for the user to enter their message and append it to messages
     userresponse = st.text_input("Enter your message")
     
-
-    # Create a button to submit the user's message
     if st.button("Send"):
         #prep the json
         newline = {"role": "user", "content": userresponse}
@@ -124,7 +97,7 @@ def main():
             if 'This is a secret internal thought' not in str(message):
                 string = string + message["role"] + ": " + message["content"] + "\n\n"
         st.write(string)
-        
+
     if st.button("Increment Day"):
         increment_variable(day)
         
@@ -170,7 +143,6 @@ def main():
 
     # At the bottom of your Streamlit layout, you can show the current week
     st.write(f"*Currently in Day:* {day.my_var}")
-        
 
 if __name__ == '__main__':
     main()
