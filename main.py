@@ -143,7 +143,7 @@ def main():
             string = ""
 
             for message in messages[1:]:
-                if 'This is a secret internal thought' not in str(message):
+                if 'secret internal thought' not in str(message):
                     string = string + message["role"] + ": " + message["content"] + "\n\n"
             st.write(string)
 
@@ -180,7 +180,7 @@ def main():
             string = ""
     
             for message in messages[1:]:
-                if "It's now the start of day"  not in str(message):
+                if "secret internal thought"  not in str(message):
                     string = string + message["role"] + ": " + message["content"] + "\n\n"
             st.write(string)
         else:
