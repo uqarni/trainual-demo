@@ -193,7 +193,7 @@ def main():
 
     # At the bottom of your Streamlit layout, you can show the current week
     st.write(f"*Currently in Day:* {day.my_var}")
-    st.write(f"is user activated? {day.activation_date}")
+    st.write(f"*is user activated?* {day.activation_date}")
         
 
 if __name__ == '__main__':
