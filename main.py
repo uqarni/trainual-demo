@@ -62,6 +62,7 @@ def main():
     
     if st.button('Click to Start or Restart'):
         reset_variable(day)
+        day.activation_date = 'no'
         st.write(initial_text)
         restart_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         with open('database.jsonl', 'r') as db, open('archive.jsonl','a') as arch:
