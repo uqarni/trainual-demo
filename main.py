@@ -22,7 +22,8 @@ bot_info = data[1][0]
 # followup_prompt
 
 class _SessionState:
-    def __init__(self, **kwargs):
+    def __init__(self, activation_date="no", **kwargs):
+        self.activation_date = activation_date
         for key, val in kwargs.items():
             setattr(self, key, val)
 
@@ -38,7 +39,7 @@ def reset_variable(state):
     state.my_var = 1
 
 def main():
-    day = get_state(my_var=1, activation_date = 'no')
+    day = get_state(my_var=1)
     # Create a title for the chat interface
     st.title("Trainual Bot (named Tracy)")
     st.write("To test, first select some fields then click the button below.")
