@@ -59,7 +59,38 @@ def main():
     userresponse = st.text_input("Enter your message")
     
     if st.button("Send"):
-        # Your sending logic remains unchanged...
+        #prep the json
+        newline = {"role": "user", "content": userresponse}
+
+        #append to database
+        with open('database.jsonl', 'a') as f:
+            # Write the new JSON object to the file
+            f.write(json.dumps(newline) + '\n')
+
+        #extract messages out to list
+        messages = []
+
+        with open('database.jsonl', 'r') as f:
+            for line in f:
+                json_obj = json.loads(line)
+                messages.append(json_obj)
+
+        #generate OpenAI response
+        messages, count = ideator(messages)
+
+        #append to database
+        with open('database.jsonl', 'a') as f:
+            for i in range(count):
+                f.write(json.dumps(messages[-count + i]) + '\n')
+
+        # Display the response in the chat interface
+        string = ""
+
+        for message in messages[1:]:
+            if 'This is a secret internal thought' not in str(message):
+                string = string + message["role"] + ": " + message["content"] + "\n\n"
+        st.write(string)
+
 
     if st.button("Increment Day"):
         increment_variable(state)
