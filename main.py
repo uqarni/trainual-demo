@@ -51,7 +51,7 @@ def main():
     promo_code = st.text_input('promo code', value = 'Trainual50')
 
     system_prompt = bot_info['system_prompt']
-    system_prompt = system_prompt.format(lead_first_name = lead_first_name, promo_code = promo_code, activation_date = activation_date)
+    system_prompt = system_prompt.format(lead_first_name = lead_first_name, promo_code = promo_code, activation_date = day.activation_date)
 
     
     initial_text = bot_info['initial_text']
