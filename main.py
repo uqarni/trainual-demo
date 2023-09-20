@@ -38,8 +38,7 @@ def reset_variable(state):
     state.my_var = 1
 
 def main():
-    day = get_state(my_var=1)
-
+    day = get_state(my_var=1, activation_date = 'no')
     # Create a title for the chat interface
     st.title("Trainual Bot (named Tracy)")
     st.write("To test, first select some fields then click the button below.")
@@ -50,7 +49,6 @@ def main():
     
     lead_first_name = st.text_input('Lead First Name', value = 'John')
     promo_code = st.text_input('promo code', value = 'Trainual50')
-    activation_date = st.selectbox('activated', ['yes', 'no'])
 
     system_prompt = bot_info['system_prompt']
     system_prompt = system_prompt.format(lead_first_name = lead_first_name, promo_code = promo_code, activation_date = activation_date)
@@ -124,7 +122,11 @@ def main():
             if 'This is a secret internal thought' not in str(message):
                 string = string + message["role"] + ": " + message["content"] + "\n\n"
         st.write(string)
-        
+
+    if st.button("Toggle Activation"):
+        if day.activation_date == "no":
+            day.activation_date = "yes" 
+            
     if st.button("Increment Day"):
         increment_variable(day)
         
@@ -170,6 +172,7 @@ def main():
 
     # At the bottom of your Streamlit layout, you can show the current week
     st.write(f"*Currently in Day:* {day.my_var}")
+    st.write(f"is user activated? {day.activation_date}")
         
 
 if __name__ == '__main__':
