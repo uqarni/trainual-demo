@@ -126,26 +126,27 @@ def main():
                 string = string + message["role"] + ": " + message["content"] + "\n\n"
         st.write(string)
 
-    if st.button("Toggle Activation"):
-        if day.activation_date == "no":
-            day.activation_date = "yes" 
-        #extract messages out to list
-        messages = []
+    if day.activation_date == 'no':
+        if st.button("Toggle Activation"):
+            if day.activation_date == "no":
+                day.activation_date = "yes" 
+            #extract messages out to list
+            messages = []
 
-        with open('database.jsonl', 'r') as f:
-            for line in f:
-                json_obj = json.loads(line)
-                messages.append(json_obj)
+            with open('database.jsonl', 'r') as f:
+                for line in f:
+                    json_obj = json.loads(line)
+                    messages.append(json_obj)
 
-        # Display the response in the chat interface
-        string = ""
+            # Display the response in the chat interface
+            string = ""
 
-        for message in messages[1:]:
-            if 'This is a secret internal thought' not in str(message):
-                string = string + message["role"] + ": " + message["content"] + "\n\n"
-        st.write(string)
+            for message in messages[1:]:
+                if 'This is a secret internal thought' not in str(message):
+                    string = string + message["role"] + ": " + message["content"] + "\n\n"
+            st.write(string)
 
-            
+    
     if st.button("Increment Day"):
         increment_variable(day)
         
