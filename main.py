@@ -126,7 +126,8 @@ def main():
             if 'This is a secret internal thought' not in str(message):
                 string = string + message["role"] + ": " + message["content"] + "\n\n"
         st.write(string)
-
+        print(string)
+        
     if day.activation_date == 'no':
         if st.button("Toggle Activation"):
             if day.activation_date == "no":
@@ -146,6 +147,7 @@ def main():
                 if 'secret internal thought' not in str(message):
                     string = string + message["role"] + ": " + message["content"] + "\n\n"
             st.write(string)
+            print(string)
 
     
     if st.button("Increment Day"):
@@ -183,6 +185,7 @@ def main():
                 if "secret internal thought"  not in str(message):
                     string = string + message["role"] + ": " + message["content"] + "\n\n"
             st.write(string)
+            print(string)
         else:
             st.write('Trial ended. Bot will not send messages. Please reset to start again.')
 
